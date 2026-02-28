@@ -1,267 +1,238 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Administrador de Citas - Azul</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrador de Citas - Azul</title>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
-<style>
-:root {
-    --vet-blue: #0d6efd;
-    --soft-bg: #eef2f7;
-}
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-body {
-    background: linear-gradient(180deg, #f8f9fa, var(--soft-bg));
-    font-family: system-ui, -apple-system, BlinkMacSystemFont;
-}
+    <style>
+        :root {
+            --vet-blue: #0d6efd;
+            --soft-bg: #eef2f7;
+        }
 
-h2 {
-    font-weight: 800;
-    letter-spacing: .5px;
-}
+        body {
+            background: linear-gradient(180deg, #f8f9fa, var(--soft-bg));
+        }
 
-.btn-add {
-    border: 2px solid var(--vet-blue);
-    color: var(--vet-blue);
-    font-weight: 600;
-    border-radius: 30px;
-    padding: 10px 26px;
-    transition: .3s;
-    background: white;
-}
+        h2 {
+            font-weight: 600;
+        }
 
-.btn-add:hover {
-    background-color: var(--vet-blue);
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(13,110,253,.4);
-}
+        .header-blue {
+            background-color: var(--vet-blue);
+            color: white;
+            padding: 12px 20px;
+        }
 
-.divider {
-    height: 7px;
-    background: linear-gradient(90deg, var(--vet-blue), #6ea8fe);
-    border-radius: 20px;
-    margin: 25px 0;
-}
+        .btn-add {
+            border: 1px solid var(--vet-blue);
+            color: var(--vet-blue);
+            font-weight: 500;
+            border-radius: 20px;
+            padding: 6px 18px;
+        }
 
-.card-cita {
-    border-radius: 22px;
-    border-left: 8px solid var(--vet-blue);
-    transition: all 0.35s ease;
-    box-shadow: 0 15px 35px rgba(0,0,0,.12);
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 6px;
-    min-height: 220px;
-}
+        .btn-add:hover {
+            background-color: var(--vet-blue);
+            color: white;
+        }
 
-.card-cita:hover {
-    transform: translateY(-6px) scale(1.02);
-    box-shadow: 0 25px 45px rgba(0,0,0,.18);
-}
+        .divider {
+            height: 6px;
+            background: linear-gradient(90deg, var(--vet-blue), #6ea8fe);
+            border-radius: 10px;
+            margin: 20px 0;
+        }
 
-.estado-Abierta {
-    border-left-color: #0d6efd;
-    background: linear-gradient(135deg, #e7f1ff, #ffffff);
-}
+        /* TARJETAS */
+        .card-cita {
+            border-radius: 16px;
+            border-left: 6px solid var(--vet-blue);
+            position: relative;
+            transition: all 0.3s ease;
+        }
 
-.estado-Terminada {
-    border-left-color: #198754;
-    background: linear-gradient(135deg, #e6f7ef, #ffffff);
-}
+        .card-cita:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+        }
 
-.estado-Anulada {
-    border-left-color: #dc3545;
-    background: linear-gradient(135deg, #fdecea, #ffffff);
-}
+        .estado-Abierta {
+            border-left-color: #0d6efd;
+            background: linear-gradient(90deg, #e7f1ff, #ffffff);
+        }
 
-.card-header-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 4px;
-}
+        .estado-Terminada {
+            border-left-color: #198754;
+            background: linear-gradient(90deg, #e6f7ef, #ffffff);
+        }
 
-.emoji-mascota {
-    font-size: 40px;
-    background: white;
-    border-radius: 50%;
-    width: 62px;
-    height: 62px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
-    animation: float 3s ease-in-out infinite;
-}
+        .estado-Anulada {
+            border-left-color: #dc3545;
+            background: linear-gradient(90deg, #fdecea, #ffffff);
+        }
 
-.card-nombre {
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: #1a1a2e;
-    line-height: 1.2;
-    word-break: break-word;
-}
+        /* 👇 EMOJI MÁS GRANDE (ÚNICO CAMBIO) */
+        .emoji-mascota {
+            font-size: 38px;
+            position: absolute;
+            top: 6px;
+            right: 8px;
+            background: white;
+            border-radius: 50%;
+            padding: 8px 12px;
+            line-height: 1;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.25);
+        }
 
-@keyframes float {
-    0%,100% { transform: translateY(0); }
-    50%      { transform: translateY(-5px); }
-}
+        .footer-line {
+            background: linear-gradient(90deg, var(--vet-blue), #6ea8fe);
+            height: 35px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
 
-.card-cita .info-row {
-    font-size: 0.85rem;
-    color: #444;
-    margin: 0;
-}
+        @media (max-width: 768px) {
+            .btn {
+                width: 100%;
+            }
 
-.card-cita .btn {
-    border-radius: 50%;
-    width: 42px;
-    height: 42px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: .3s;
-}
-
-.card-cita .btn:hover {
-    transform: scale(1.15);
-}
-
-.footer-line {
-    background: linear-gradient(90deg, var(--vet-blue), #6ea8fe);
-    height: 40px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
-
-/* Responsividad para pantallas ≤450px */
-@media (max-width: 450px) {
-    .d-flex.flex-wrap.justify-content-between {
-        flex-direction: column;   /* apilar verticalmente */
-        align-items: center;      /* centrar horizontalmente */
-        gap: 15px;                /* espacio entre select y botón */
-    }
-
-    .d-flex.flex-wrap.justify-content-between select,
-    .d-flex.flex-wrap.justify-content-between .btn-add {
-        width: 90%;               /* casi todo el ancho */
-        max-width: 300px;         /* no demasiado ancho */
-    }
-}
-</style>
+            h2 {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
 </head>
 
 <body class="pb-5">
 
 <div class="container mt-4">
-<h2 class="text-center mb-4">Administrador de citas</h2>
+    <h2 class="text-center mb-4">Administrador de citas</h2>
 
-<div class="d-flex flex-wrap justify-content-between align-items-end mb-3 gap-3">
-    <div style="width: 250px;">
-        <label class="form-label small text-muted">Filtrar por estado</label>
-        <select id="filtroEstado" class="form-select border-primary">
-            <option value="Abierta">Abierta</option>
-            <option value="Terminada">Terminadas</option>
-            <option value="Anulada">Anuladas</option>
-        </select>
+    <div class="d-flex flex-wrap justify-content-between align-items-end mb-3 gap-3">    menu desplegable para filtrar por estado de la cita
+        <div style="width: 250px;">
+            <label class="form-label small text-muted">Filtrar por estado</label>
+            <select id="filtroEstado" class="form-select border-primary">
+                <option value="Abierta">Abierta</option>
+                <option value="Terminada">Terminadas</option>
+                <option value="Anulada">Anuladas</option>
+            </select>
+        </div>
+
+        <button class="btn btn-add" data-bs-toggle="modal" data-bs-target="#modalCita"
+                onclick="prepararNuevaCita()">AGREGAR CITA</button>
     </div>
 
-    <button class="btn btn-add" data-bs-toggle="modal" data-bs-target="#modalCita"
-        onclick="prepararNuevaCita()">AGREGAR CITA</button>
+    <div class="divider"></div>
+    <div id="listaCitas" class="row g-3"></div>
 </div>
 
-<div class="divider"></div>
-<div id="listaCitas" class="row g-3"></div>
+<!-- MODAL CITA -->
+<div class="modal fade" id="modalCita" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="header-blue d-flex justify-content-between align-items-center">
+                <h5 class="m-0" id="tituloModal">Guardar nueva cita</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <form id="formCita">
+                    <input type="text" class="form-control mb-3" id="nombreMascota" placeholder="Nombre Mascota">
+                    <input type="text" class="form-control mb-3" id="propietario" placeholder="Propietario">
+                    <input type="number" class="form-control mb-3" id="telefono" placeholder="Teléfono">
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="small text-muted">Fecha</label>
+                            <input type="date" class="form-control" id="fecha">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="small text-muted">Hora</label>
+                            <input type="time" class="form-control" id="hora">
+                        </div>
+                    </div>
+
+                    <select id="tipoMascota" class="form-select mb-3">
+                        <option value="No aplica">Tipo de mascota</option>
+                        <option value="Perro">Perro</option>
+                        <option value="Gato">Gato</option>
+                        <option value="Ave">Ave</option>
+                        <option value="Conejo">Conejo</option>
+                        <option value="Hamster">Hamster</option>
+                        <option value="Pez">Pez</option>
+                        <option value="Tortuga">Tortuga</option>
+                        <option value="Caballo">Caballo</option>
+                        <option value="Vaca">Vaca</option>
+                        <option value="Cerdo">Cerdo</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+
+                    <textarea class="form-control" id="sintomas" rows="3" placeholder="Síntomas"></textarea>
+                </form>
+            </div>
+
+            <div class="modal-footer border-0">
+                <button class="btn btn-outline-secondary" data-bs-dismiss="modal">CERRAR</button>
+                <button class="btn btn-primary" onclick="validarYGuardar()">GUARDAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL ELIMINAR -->
+<div class="modal fade" id="confirmarEliminar" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content text-center p-4">
+            <h4>Confirmar</h4>
+            <p>¿Está seguro que desea eliminar esta cita?</p>
+            <div class="d-flex justify-content-center gap-3">
+                <button class="btn btn-light" data-bs-dismiss="modal">CANCELAR</button>
+                <button class="btn btn-primary" id="confirmBtn">ACEPTAR</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <footer class="footer-line"></footer>
-
-<!-- Modal para agregar/editar cita -->
-<div class="modal fade" id="modalCita" tabindex="-1" aria-labelledby="modalCitaLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalCitaLabel">Nueva Cita</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
-      <div class="modal-body">
-        <form id="formCita">
-          <div class="mb-3">
-            <label for="nombreMascota" class="form-label">Nombre Mascota</label>
-            <input type="text" class="form-control" id="nombreMascota" required>
-          </div>
-          <div class="mb-3">
-            <label for="tipoMascota" class="form-label">Tipo</label>
-            <select class="form-select" id="tipoMascota" required>
-              <option value="" selected disabled>Seleccione un tipo</option>
-              <option value="Perro">Perro</option>
-              <option value="Gato">Gato</option>
-              <option value="Ave">Ave</option>
-              <option value="Conejo">Conejo</option>
-              <option value="Hamster">Hamster</option>
-              <option value="Pez">Pez</option>
-              <option value="Tortuga">Tortuga</option>
-              <option value="Caballo">Caballo</option>
-              <option value="Vaca">Vaca</option>
-              <option value="Cerdo">Cerdo</option>
-              <option value="Otro">Otro</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="propietario" class="form-label">Propietario</label>
-            <input type="text" class="form-control" id="propietario" required>
-          </div>
-          <div class="mb-3">
-            <label for="telefono" class="form-label">Teléfono</label>
-            <input type="text" class="form-control" id="telefono" required>
-          </div>
-          <div class="mb-3">
-            <label for="fecha" class="form-label">Fecha</label>
-            <input type="date" class="form-control" id="fecha" required>
-          </div>
-          <div class="mb-3">
-            <label for="hora" class="form-label">Hora</label>
-            <input type="time" class="form-control" id="hora" required>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary" onclick="guardarCita()">Guardar</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
 let citas = JSON.parse(localStorage.getItem('citas_vet_blue')) || [];
-
-const filtroEstado = document.getElementById('filtroEstado');
+let indexEliminar = null;
+let indexEditar = null;
 
 function alerta(texto) {
-    Swal.fire({ icon: 'warning', title: 'Atención', text: texto, confirmButtonColor: '#0d6efd' });
+    Swal.fire({
+        icon: 'warning',
+        title: 'Atención',
+        text: texto,
+        confirmButtonColor: '#0d6efd'
+    });
 }
 
 function obtenerEmoji(tipo) {
-    const emojis = {
-        Perro:'🐶', Gato:'🐱', Ave:'🐦', Conejo:'🐰',
-        Hamster:'🐹', Pez:'🐠', Tortuga:'🐢',
-        Caballo:'🐴', Vaca:'🐮', Cerdo:'🐷',
-        Otro:'🐏'
-    };
-    return emojis[tipo] || '🐾';
+    if (tipo === 'Perro') return '🐶';
+    if (tipo === 'Gato') return '🐱';
+    if (tipo === 'Ave') return '🐦';
+    if (tipo === 'Conejo') return '🐰';
+    if (tipo === 'Hamster') return '🐹';
+    if (tipo === 'Pez') return '🐠';
+    if (tipo === 'Tortuga') return '🐢';
+    if (tipo === 'Caballo') return '🐴';
+    if (tipo === 'Vaca') return '🐮';
+    if (tipo === 'Cerdo') return '🐷';
+    if (tipo === 'Otro') return '🐾';
 }
 
 function cargarCitas() {
@@ -269,20 +240,18 @@ function cargarCitas() {
     const filtro = filtroEstado.value;
     lista.innerHTML = '';
 
-    citas.filter(c => c.estado === filtro).forEach((cita, i) => {
+    citas.filter(c => c.estado === filtro).forEach(cita => {
+        const i = citas.indexOf(cita);
         lista.innerHTML += `
-        <div class="col-12 col-sm-6 col-md-4">
-            <div class="card card-cita estado-${cita.estado}">
-                <div class="card-header-row">
-                    <div class="emoji-mascota">${obtenerEmoji(cita.tipo)}</div>
-                    <div class="card-nombre">${cita.nombreMascota}</div>
-                </div>
+        <div class="col-md-4">
+            <div class="card card-cita p-3 shadow-sm estado-${cita.estado}">        si se cumple entonces se filtra el estado y se muestra en la lista
+                <span class="emoji-mascota">${obtenerEmoji(cita.tipo)}</span>
+                <p><strong>Mascota:</strong> ${cita.nombreMascota}</p>
+                <p class="small">Propietario: ${cita.propietario}</p>
+                <p class="small">Tel: ${cita.telefono}</p>
+                <p class="small">Fecha: ${cita.fecha} ${cita.hora}</p>
 
-                <p class="info-row"><strong>Propietario:</strong> ${cita.propietario}</p>
-                <p class="info-row"><strong>Tel:</strong> ${cita.telefono}</p>
-                <p class="info-row"><strong>Fecha:</strong> ${cita.fecha} ${cita.hora}</p>
-
-                <select class="form-select form-select-sm mt-1"
+                <select class="form-select form-select-sm"
                     onchange="cambiarEstado(${i}, this.value)">
                     <option ${cita.estado=='Abierta'?'selected':''}>Abierta</option>
                     <option ${cita.estado=='Terminada'?'selected':''}>Terminada</option>
@@ -290,9 +259,9 @@ function cargarCitas() {
                 </select>
 
                 <div class="d-flex justify-content-center gap-2 mt-3">
-                    <button class="btn btn-outline-primary"
+                    <button class="btn btn-sm btn-outline-primary"
                         onclick="editarCita(${i})"><i class="bi bi-pencil-square"></i></button>
-                    <button class="btn btn-outline-danger"
+                    <button class="btn btn-sm btn-outline-danger"
                         onclick="prepararEliminar(${i})"><i class="bi bi-trash"></i></button>
                 </div>
             </div>
@@ -301,35 +270,76 @@ function cargarCitas() {
 }
 
 function prepararNuevaCita() {
-    document.getElementById('formCita').reset();
-    document.getElementById('tipoMascota').value = ""; // que no aparezca seleccionado
-    document.getElementById('modalCitaLabel').textContent = 'Nueva Cita';
+    indexEditar = null;
+    formCita.reset();
+    tituloModal.innerText = "Agregar";
 }
 
-function guardarCita() {
-    const nombreMascota = document.getElementById('nombreMascota').value.trim();
-    const tipo = document.getElementById('tipoMascota').value;
-    const propietario = document.getElementById('propietario').value.trim();
-    const telefono = document.getElementById('telefono').value.trim();
-    const fecha = document.getElementById('fecha').value;
-    const hora = document.getElementById('hora').value;
+function validarYGuardar() {
+    const data = {
+        nombreMascota: nombreMascota.value.trim(),
+        propietario: propietario.value.trim(),
+        telefono: telefono.value.trim(),
+        fecha: fecha.value,
+        hora: hora.value,
+        tipo: tipoMascota.value,
+        sintomas: sintomas.value.trim(),
+        estado: 'Abierta',
+        id: indexEditar !== null ? citas[indexEditar].id : Date.now().toString().slice(-6)
+    };
 
-    // Validación específica con SweetAlert2
-    if (!nombreMascota) { alerta("Por favor ingrese el nombre de la mascota"); return; }
-    if (!tipo) { alerta("Por favor seleccione el tipo de mascota"); return; }
-    if (!propietario) { alerta("Por favor ingrese el nombre del propietario"); return; }
-    if (!telefono) { alerta("Por favor ingrese el teléfono del propietario"); return; }
-    if (!fecha) { alerta("Por favor seleccione la fecha de la cita"); return; }
-    if (!hora) { alerta("Por favor seleccione la hora de la cita"); return; }
+    if (!data.nombreMascota) return alerta("Debe ingresar el nombre de la mascota");
+    if (!data.propietario) return alerta("Debe ingresar el propietario");
+    if (!data.telefono) return alerta("Debe ingresar un teléfono");
+    if (!data.fecha) return alerta("Debe seleccionar la fecha");
+    if (!data.hora) return alerta("Debe seleccionar la hora");
+    if (data.tipo === "No aplica") return alerta("Seleccione el tipo de mascota");
+    if (!data.sintomas) return alerta("Ingrese los síntomas");
 
-    const nuevaCita = { nombreMascota, tipo, propietario, telefono, fecha, hora, estado: "Abierta" };
+    if (indexEditar !== null) citas[indexEditar] = data;
+    else citas.push(data);
 
-    citas.push(nuevaCita);
     localStorage.setItem('citas_vet_blue', JSON.stringify(citas));
+    bootstrap.Modal.getInstance(modalCita).hide();
     cargarCitas();
 
-    const modal = bootstrap.Modal.getInstance(document.getElementById('modalCita'));
-    modal.hide();
+    Swal.fire({
+        icon: 'success',
+        title: 'Cita guardada',
+        confirmButtonColor: '#0d6efd'
+    });
+}
+
+function editarCita(i) {
+    indexEditar = i;
+    const c = citas[i];
+    nombreMascota.value = c.nombreMascota;
+    propietario.value = c.propietario;
+    telefono.value = c.telefono;
+    fecha.value = c.fecha;
+    hora.value = c.hora;
+    tipoMascota.value = c.tipo;
+    sintomas.value = c.sintomas;
+    tituloModal.innerText = "Editar cita";
+    new bootstrap.Modal(modalCita).show();
+}
+
+function prepararEliminar(i) {
+    indexEliminar = i;
+    new bootstrap.Modal(confirmarEliminar).show();
+}
+
+confirmBtn.onclick = () => {
+    citas.splice(indexEliminar, 1);
+    localStorage.setItem('citas_vet_blue', JSON.stringify(citas));
+    bootstrap.Modal.getInstance(confirmarEliminar).hide();
+    cargarCitas();
+};
+
+function cambiarEstado(i, estado) {
+    citas[i].estado = estado;
+    localStorage.setItem('citas_vet_blue', JSON.stringify(citas));
+    cargarCitas();
 }
 
 filtroEstado.addEventListener('change', cargarCitas);
@@ -338,6 +348,9 @@ window.onload = cargarCitas;
 
 </body>
 </html>
+
+
+
 
 
 
