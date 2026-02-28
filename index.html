@@ -118,7 +118,7 @@
 <div class="container mt-4">
     <h2 class="text-center mb-4">Administrador de citas</h2>
 
-    <div class="d-flex flex-wrap justify-content-between align-items-end mb-3 gap-3">    
+    <div class="d-flex flex-wrap justify-content-between align-items-end mb-3 gap-3">    menu desplegable para filtrar por estado de la cita
         <div style="width: 250px;">
             <label class="form-label small text-muted">Filtrar por estado</label>
             <select id="filtroEstado" class="form-select border-primary">
@@ -244,7 +244,7 @@ function cargarCitas() {
         const i = citas.indexOf(cita);
         lista.innerHTML += `
         <div class="col-md-4">
-            <div class="card card-cita p-3 shadow-sm estado-${cita.estado}">        
+            <div class="card card-cita p-3 shadow-sm estado-${cita.estado}">        si se cumple entonces se filtra el estado y se muestra en la lista
                 <span class="emoji-mascota">${obtenerEmoji(cita.tipo)}</span>
                 <p><strong>Mascota:</strong> ${cita.nombreMascota}</p>
                 <p class="small">Propietario: ${cita.propietario}</p>
@@ -295,6 +295,20 @@ function validarYGuardar() {
     if (!data.hora) return alerta("Debe seleccionar la hora");
     if (data.tipo === "No aplica") return alerta("Seleccione el tipo de mascota");
     if (!data.sintomas) return alerta("Ingrese los síntomas");
+
+    // Validar que la fecha no sea anterior a la actual
+    const hoy = new Date();
+    hoy.setHours(0, 0, 0, 0);
+    const fechaIngresada = new Date(data.fecha);
+    if (fechaIngresada < hoy) {
+        return alerta("La fecha debe ser igual o posterior a la fecha actual");
+    }
+
+    // Validar horario de atención: solo entre 8:00 AM y 8:00 PM
+    const horaIngresada = data.hora;
+    if (horaIngresada < "08:00" || horaIngresada > "20:00") {
+        return alerta("El servicio solo está disponible entre las 8:00 AM y las 8:00 PM");
+    }
 
     if (indexEditar !== null) citas[indexEditar] = data;
     else citas.push(data);
